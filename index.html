@@ -13,9 +13,9 @@
 				<div data-role="navbar">
 					<ul>
 						<li><a href="#page1" class="ui-btn-active ui-state-persist" >Cerca Hotel</a></li>
-						<li><a href="#page2">Page2</a></li>
-						<li><a href="#page3">Page3</a></li>
-						<li><a href="#page4">Page4</a></li>
+						<li><a href="#page2">Test</a></li>
+						<li><a href="#page3">Guida</a></li>
+						<li><a href="#page4">Sconti</a></li>
 					</ul>
 				</div>
 			</div>
@@ -27,10 +27,10 @@
 			<div data-role="header" data-id="foo1" data-position="fixed">
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#page1" >Page1</a></li>
-						<li><a href="#page2" class="ui-btn-active ui-state-persist"  >Page2</a></li>
-						<li><a href="#page3">Page3</a></li>
-						<li><a href="#page4">Page4</a></li>
+						<li><a href="#page1" >Cerca Hotel</a></li>
+						<li><a href="#page2" class="ui-btn-active ui-state-persist">Test</a></li>
+						<li><a href="#page3">Guida</a></li>
+						<li><a href="#page4">Sconti</a></li>
 					</ul>
 				</div>
 			</div>
@@ -42,10 +42,10 @@
 			<div data-role="header" data-id="foo1" data-position="fixed">
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#page1">Page1</a></li>
-						<li><a href="#page2">Page2</a></li>
-						<li><a href="#page3" class="ui-btn-active ui-state-persist" >Page3</a></li>
-						<li><a href="#page4">Page4</a></li>
+						<li><a href="#page1" >Cerca Hotel</a></li>
+						<li><a href="#page2">Test</a></li>
+						<li><a href="#page3" class="ui-btn-active ui-state-persist">Guida</a></li>
+						<li><a href="#page4">Sconti</a></li>
 					</ul>
 				</div>
 			</div>
@@ -57,10 +57,10 @@
 			<div data-role="header" data-id="foo1" data-position="fixed">
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#page1">Page1</a></li>
-						<li><a href="#page2">Page2</a></li>
-						<li><a href="#page3">Page3</a></li>
-						<li><a href="#page4" class="ui-btn-active ui-state-persist" >Page4</a></li>
+						<li><a href="#page1"   >Cerca Hotel</a></li>
+						<li><a href="#page2">Test</a></li>
+						<li><a href="#page3">Guida</a></li>
+						<li><a href="#page4" class="ui-btn-active ui-state-persist">Sconti</a></li>
 					</ul>
 				</div>
 			</div>
@@ -107,7 +107,7 @@
 						div.html(data.contents.content);
 						$(pageId+' .content').append(div);
 					}
-					$.mobile.hidePageLoadingMsg();
+					$.mobile.hidePageLoadingMsg(); 
 				});
 			}
 			$(document).on("pageinit", "#page3", function(){
@@ -116,6 +116,16 @@
 			$(document).on("pageinit", "#page4", function(){
 				doThat('http://www.alberghi.it/ws/json.php?category=1', '#page4');
 			});
+			
+			$(function (){
+				/*
+				 var theHeader = $('#constantheader-wrapper').html();
+				var allPages = $('div[data-role="page"] ');
+			
+					for (var i = 1; i < allPages.length; i++) {
+						allPages[i].innerHTML = theHeader + allPages[i].innerHTML;
+					}*/
+				});
 		</script>
 	</body>
 </html>
