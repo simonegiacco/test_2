@@ -3,15 +3,15 @@
 	<head>
 		<meta charset="utf-8"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<link rel="stylesheet" href="themes/AndroidHoloDarkLight.min.css" />
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
-		<!--link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" /-->
+		<!--link rel="stylesheet" href="themes/AndroidHoloDarkLight.min.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" /-->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script>
 			$(document).bind("mobileinit", function(){
 			  $.mobile.defaultPageTransition = 'slide';
 			   // Navigation
-				$.mobile.page.prototype.options.backBtnText = "Indetro";
+				$.mobile.page.prototype.options.backBtnText = "Indetro"; 
 				$.mobile.page.prototype.options.addBackBtn      = true;
 				$.mobile.page.prototype.options.backBtnTheme    = "c";
 			
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			<div data-role="content" style="padding:0" >
-				<iframe src="http://cerca.alberghi.it/?Mobile=1" width="100%" height="100%" frameborder="0" style="boder:0px; min-height:500px;" ></iframe>
+				<iframe src="http://cerca.alberghi.it/?Mobile=1&label=mobile_app" width="100%" height="100%" frameborder="0" style="boder:0px; min-height:500px;" ></iframe>
 			</div>
 		</div>
 		<!--div data-role="page" id="test" data-add-back-btn="true"  >
@@ -113,21 +113,22 @@
 		<script type="text/javascript" > 
 			function doThat(url, pageId)
 			{
-				setTimeout("$.mobile.showPageLoadingMsg();", 1);
-				$.getJSON('http://anyorigin.com/get?url='+encodeURIComponent(url)+'&callback=?', function(data){
+				setTimeout("$.mobile.showPageLoadingMsg();", 10);
+				//$.getJSON('http://whateverorigin.org/get?url='+encodeURIComponent(url)+'&callback=?', function(data){
+				$.getJSON(url, function(data){
 					$(pageId+' .content').html('');
- 					if(typeof(data.contents.list.items)!="undefined")
+ 					if(typeof(data.list.items)!="undefined")
 					{
 						var h3 = $("<h3></h3>");
-						h3.html(data.contents.title);
-						$(pageId+' .content').append(h3);
+						h3.html(data.title);
+						$(pageId+' .content').append(h3); 
 
 						var ul = $('<ul data-role="list-view" id="list-view1" '+ 
 							   'data-inset="true" data-filter="true" '+ 
-							   'data-filter-placeholder="'+data.contents.subtitle+'"></ul>');
+							   'data-filter-placeholder="'+data.subtitle+'"></ul>');
 						$(pageId+' .content').append(ul);
-						url = url +((url.indexOf('?'))!=-1?"&":"?")+data.contents.list.item_name+"=";
-						$.each(data.contents.list.items, function(i, item){
+						url = url +((url.indexOf('?'))!=-1?"&":"?")+data.list.item_name+"=";
+						$.each(data.list.items, function(i, item){
 							var li = $("<li></li>");
 							var a = $("<a data-category_id='"+item.id+
 							"' href='#' onclick='doThat(\""+url+item.id+"\", \""+pageId+"\")'>"+
@@ -140,13 +141,13 @@
 					else
 					{
 						var h3 = $("<h3></h3>");
-						h3.html(data.contents.title);
+						h3.html(data.title);
 						$(pageId+' .content').append(h3);
 						var h4 = $("<h4></h4>");
-						h4.html(data.contents.subtitle);
+						h4.html(data.subtitle);
 						$(pageId+' .content').append(h4);
 						var div = $("<div></div>");
-						div.html(data.contents.content);
+						div.html(data.content);
 						$(pageId+' .content').append(div);
 					}
 					$.mobile.hidePageLoadingMsg(); 
@@ -186,7 +187,8 @@
 
 				setTimeout("$.mobile.showPageLoadingMsg();", 1);
 				console.log(url);
-				$.getJSON('http://anyorigin.com/get?url='+encodeURIComponent(url)+'&callback=?', function(data){
+				//$.getJSON('http://whateverorigin.org/get?url='+encodeURIComponent(url)+'&callback=?', function(data){
+				$.getJSON(url, function(data){
 					
 					var $page = $( pageId );
 					
@@ -202,36 +204,49 @@
 						$nav = $page.find( ":jqmData(role=navbar)" ),
 						
 						markup='';
+					if(typeof data.contents !='undefined') data=data.contents;
+					console.log(data); 
+					markup += "<h2>"+data.subtitle+"</h2>";
+					 
+					if(data.pic){
+						markup += "<img src='"+data.pic+"' style='max-width=100%;' />";
+					}
 					
-					
-					markup += "<h2>"+data.contents.subtitle+"</h2>";
-					markup += "<p>"+data.contents.content+"</p>";
-					if(typeof(data.contents.list.items)!="undefined")
+					markup += "<p>"+data.content+"</p>";
+					if(typeof(data.list)!="undefined" && typeof(data.list.items)!="undefined")
 					{
 
 
 						var ul = $('<ul data-role="list-view" id="list-view1" '+ 
 							   'data-inset="true" data-filter="true" '+ 
-							  '></ul>');// 'data-filter-placeholder="'+data.contents.subtitle+'"
+							  '></ul>');// 'data-filter-placeholder="'+data.subtitle+'"
 					
 					
-						url = url +((url.indexOf('?'))!=-1?"&":"?")+data.contents.list.item_name+"=";
-						$.each(data.contents.list.items, function(i, item){
+						url = url +((url.indexOf('?'))!=-1?"&":"?")+data.list.item_name+"=";
+						$.each(data.list.items, function(i, item){
 							var li = $("<li></li>");
+							var href='';
+							var target='';
+							if(item.url){
+								href=item.url
+								target='_blank'
+							}else{
+								href='#'+data.list.item_name+"_"+item.id
+							}
 							var a = $("<a data-category_id='"+item.id+
-							"' href='#"+data.contents.list.item_name+"_"+item.id+"' ondoubleclick='doThat(\""+url+item.id+"\", \""+pageSelector+"\")'>"+
+							"' href='"+href+"' target='"+target+"' ondoubleclick='doThat(\""+url+item.id+"\", \""+pageSelector+"\")'>"+
 							(item.pic?"<img src='"+item.pic+"' />":"")+
 							(item.subtitle?"<h3>"+item.title+"</h3>":item.title)+
 							(item.subtitle?"<p>"+item.subtitle+"</p>":"")+
-							
-							"</a>");
+							(item.count?"<span class='ui-li-count'>"+item.count+"</span>":"")+
+							"</a>"); 
 							li.append(a);		
 							ul.append(li);
 						});
 						markup+=ul.wrap('<div/>').parent().html();
 					}
 					
-					$header.find( "h1" ).html(data.contents.title );
+					$header.find( "h1" ).html(data.title );
 					$content.html(markup)
 					
 					$nav.has("a[href^="+pageType+"]").find("a").removeClass('ui-btn-active ui-state-persist').filter("[href^="+pageType+"]").addClass('ui-btn-active ui-state-persist');
