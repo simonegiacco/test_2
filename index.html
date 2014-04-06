@@ -206,7 +206,6 @@
 
 						markup='';
 					if(typeof data.contents !='undefined') data=data.contents;
-					console.log(data);
 					markup += "<h2>"+data.subtitle+"</h2>";
 
 					if(data.pic){
@@ -258,6 +257,11 @@
 							e.preventDefault();
 							var ref = window.open(linkurl, '_blank', 'location=yes');
 						});
+					}
+
+					//Se sono in guide-city il tab attivo rimane guide
+					if (pageType === '#guide-city') {
+						pageType = '#guide';
 					}
 
 					$nav.has("a[href^="+pageType+"]").find("a").removeClass('ui-btn-active ui-state-persist').filter("[href^="+pageType+"]").addClass('ui-btn-active ui-state-persist');
