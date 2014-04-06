@@ -260,8 +260,16 @@
 					}
 
 					//Se sono in guide-city il tab attivo rimane guide
+					//Inoltre fix del pulsante back per le pagine main
 					if (pageType === '#guide-city') {
 						pageType = '#guide';
+						$page.attr('data-add-back-btn', true);
+					}
+					else if (pageId.indexOf('#sconti__') !== -1) {
+						$page.attr('data-add-back-btn', true);
+					}
+					else {
+						$page.attr('data-add-back-btn', false);
 					}
 
 					$nav.has("a[href^="+pageType+"]").find("a").removeClass('ui-btn-active ui-state-persist').filter("[href^="+pageType+"]").addClass('ui-btn-active ui-state-persist');
