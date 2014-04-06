@@ -177,6 +177,8 @@
 				var $page = $( pageId );
 
 					if($page.length){
+						//Fix click per il sistema di cache con inappbrowser
+						$('#list-view1 a').off();
 						return false;
 					}
 				pageSelector=pageType;
