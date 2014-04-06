@@ -250,6 +250,16 @@
 					$header.find( "h1" ).html(data.title );
 					$content.html(markup)
 
+					//Gestione dei link esterni con inappbrowser
+					if (data.list.items[0].url) {
+						$('#list-view1 a').off();
+						$('#list-view1 a').on('click', function(e) {
+							var linkurl = $(e.currentTarget).attr('href');
+							e.preventDefault();
+							var ref = window.open(linkurl, '_blank', 'location=yes');
+						});
+					}
+
 					$nav.has("a[href^="+pageType+"]").find("a").removeClass('ui-btn-active ui-state-persist').filter("[href^="+pageType+"]").addClass('ui-btn-active ui-state-persist');
 					$page.page();
 					$content.find( "ul" ).listview();
